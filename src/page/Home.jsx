@@ -2,7 +2,7 @@ import React from "react";
 
 const Home = () => {
   return (
-    <section className="flex flex-col pt-20 items-center w-screen">
+    <section className="flex flex-col pt-20 items-center w-screen h-screen">
       <h1>Home</h1>
       <input
         type="search"
