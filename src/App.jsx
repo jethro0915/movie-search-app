@@ -9,6 +9,7 @@ import Home from "./page/Home";
 import Collections from "./page/Collections";
 import History from "./page/History";
 import ThemeProvider from "./context/ThemeProvider";
+import MovieDetail from "./page/MovieDetail";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -16,6 +17,7 @@ const router = createBrowserRouter(
       <Route index element={<Home />} />
       <Route path="collections" element={<Collections />} />
       <Route path="history" element={<History />} />
+      <Route path="movies/:movieId" element={<MovieDetail />} />
     </Route>
   )
 );

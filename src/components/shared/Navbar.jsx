@@ -58,7 +58,7 @@ const Navbar = () => {
                           "inline-flex gap-3 p-3 text-black  rounded-md w-[200px] dark:text-white",
                           isActive
                             ? "bg-red-300 hover:bg-red-300"
-                            : " hover:bg-slate-100 ",
+                            : " hover:bg-slate-100 dark:hover:bg-slate-700",
                         ].join(" ")
                       }
                     >
@@ -71,7 +71,7 @@ const Navbar = () => {
             </SheetClose>
             <button
               onClick={toggleTheme}
-              className="bg-white inline-flex gap-3 p-3 text-black hover:bg-slate-100 rounded-md outline-none w-[200px] dark:bg-slate-900 dark:text-white"
+              className="bg-white inline-flex gap-3 p-3 text-black hover:bg-slate-100 rounded-md outline-none w-[200px] dark:bg-slate-900 dark:text-white dark:hover:bg-slate-700"
             >
               {mode === "light" ? (
                 <SunIcon fill={`black`} width={22} height={22} />

@@ -5,11 +5,13 @@ import Navbar from "../shared/Navbar";
 
 const PageLayout = () => {
   return (
-    <main className="bg-slate-50 dark:bg-black">
+    <main className="bg-slate-50 dark:bg-black relative">
       <Navbar />
       <div className="flex">
         <LeftSidebar />
-        <Outlet />
+        <section className="flex flex-col flex-wrap ml-auto w-[90%] max-sm:w-full h-auto p-4">
+          <Outlet />
+        </section>
       </div>
     </main>
   );

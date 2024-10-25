@@ -2,7 +2,7 @@ import React from "react";
 
 const Collections = () => {
   return (
-    <section className="flex flex-col pt-20 items-center w-screen h-screen">
+    <section className="flex flex-col pt-20 items-center h-full">
       Collections
     </section>
   );
