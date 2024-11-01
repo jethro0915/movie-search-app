@@ -1,11 +1,14 @@
+/* eslint-disable */
+
 import React from "react";
 import RatingIcon from "../../assets/rating.svg";
 import PopularityIcon from "../../assets/popularity.svg";
-import { getDataValue } from "@/lib/utils";
+import { getArrayValue, getStringValue } from "@/lib/utils";
 import { useTheme } from "@/hooks/useTheme";
 
 const MovieInfo = ({ movieData }) => {
   const { mode } = useTheme();
+  console.log(movieData);
   return (
     <div>
       <div className="px-4 border-l-4 border-l-red-500">
@@ -19,39 +22,51 @@ const MovieInfo = ({ movieData }) => {
 
       <div className="flex max-sm:flex-col max-sm:items-center text-black dark:text-white">
         <div className="space-y-8 py-4 pr-4 border-r max-w-[320px] w-full max-sm:border-none">
-          <img
-            src={`https://image.tmdb.org/t/p/w200${movieData.poster_path}`}
-            alt={movieData.title}
-            width="300px"
-          />
+          {movieData.poster_path === null ? (
+            <div className="flex w-[300px] h-[450px] bg-slate-400 justify-center items-center font-semibold text-3xl">
+              No Image
+            </div>
+          ) : (
+            <div className="h-[450px]">
+              <img
+                src={`https://image.tmdb.org/t/p/w200${movieData.poster_path}`}
+                alt={movieData.title}
+                width="300px"
+                height="450px"
+              />
+            </div>
+          )}
+
           <div className="space-y-2">
             <p>
               <span className="font-semibold">Production Company: </span>
-              {getDataValue(movieData.production_companies)}
+              {getArrayValue(movieData.production_companies)}
             </p>
             <p>
               <span className="font-semibold">Production Countries: </span>
-              {getDataValue(movieData.production_countries)}
+              {getArrayValue(movieData.production_countries)}
             </p>
             <p>
               <span className="font-semibold">Release Date: </span>
-              {movieData.release_date}
+              {getStringValue(movieData.release_date)}
             </p>
             <p>
               <span className="font-semibold">Genres: </span>
-              {getDataValue(movieData.genres)}
+              {getArrayValue(movieData.genres)}
             </p>
             <p>
               <span className="font-semibold">Duration: </span>
-              {`${movieData.runtime} mins`}
+              {`${getStringValue(movieData.runtime)} ${
+                getStringValue(movieData.runtime) !== "N/A" && "mins"
+              }`}
             </p>
             <p>
               <span className="font-semibold">Original Language: </span>
-              {movieData.original_language}
+              {getStringValue(movieData.original_language)}
             </p>
             <p>
               <span className="font-semibold">Spoken Languages: </span>
-              {getDataValue(movieData.spoken_languages)}
+              {getArrayValue(movieData.spoken_languages)}
             </p>
           </div>
         </div>
@@ -67,8 +82,14 @@ const MovieInfo = ({ movieData }) => {
                 Ratings
               </span>
 
-              <p className="text-3xl mt-8">{movieData.vote_average}</p>
-              <p className="text-sm">{`${movieData.vote_count} users`}</p>
+              <p className="text-3xl mt-8">
+                {getStringValue(movieData.vote_average)}
+              </p>
+              <p className="text-sm">{`${getStringValue(
+                movieData.vote_count
+              )} ${
+                getStringValue(movieData.vote_count) !== "N/A" ? "users" : ""
+              }`}</p>
             </div>
             <div className="flex flex-col items-center">
               <span className="inline-flex text-4xl font-semibold items-center gap-2">
@@ -79,20 +100,22 @@ const MovieInfo = ({ movieData }) => {
                 />
                 Popularity
               </span>
-              <p className="text-3xl mt-8">{movieData.popularity}</p>
+              <p className="text-3xl mt-8">
+                {getStringValue(movieData.popularity)}
+              </p>
             </div>
           </div>
           <div className="space-y-8">
             <h1 className="text-3xl font-medium pl-4 border-l-4 border-l-red-500">
               Homepage
             </h1>
-            <p className="ml-5 text-lg">{movieData.homepage}</p>
+            <p className="ml-5 text-lg">{getStringValue(movieData.homepage)}</p>
           </div>
           <div className="space-y-8">
             <h1 className="text-3xl font-medium pl-4 border-l-4 border-l-red-500">
               Overview
             </h1>
-            <p className="ml-5 text-lg">{movieData.overview}</p>
+            <p className="ml-5 text-lg">{getStringValue(movieData.overview)}</p>
           </div>
         </div>
       </div>

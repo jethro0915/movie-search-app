@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation, Link } from "react-router-dom";
 import axios from "axios";
 import { API_KEY } from "@/constants/movieApiKey";
 import MovieInfo from "@/components/movie/MovieInfo";
+import BackIcon from "../assets/chevronleft.svg";
 
 const MovieDetail = () => {
   const { movieId } = useParams();
   const [movieInfo, setMovieInfo] = useState({});
+  const { state } = useLocation();
 
   useEffect(() => {
     const getMovieById = async (id) => {
@@ -24,11 +26,17 @@ const MovieDetail = () => {
   }, [movieId]);
 
   console.log(movieInfo);
+  console.log(state);
 
   return (
-    <section className="pt-20 container flex flex-col items-center mx-auto">
-      <MovieInfo movieData={movieInfo} />
-    </section>
+    <div className="pt-20">
+      <section className="mt-5 container flex flex-col items-center mx-auto">
+        <Link to={`${state.url}?${state.searchQuery}`} className="mr-auto mb-5">
+          <BackIcon fill="red" width="25px" height="25px" className="ml-5" />
+        </Link>
+        <MovieInfo movieData={movieInfo} />
+      </section>
+    </div>
   );
 };
 
