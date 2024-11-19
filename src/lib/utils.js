@@ -32,3 +32,13 @@ export const getStringValue = (data) => {
     return data;
   }
 };
+
+export const getPageArray = (currentPage, totalPage) => {
+  const start = Math.max(1, currentPage - 2);
+  const end = Math.min(start + 4, totalPage);
+  const result = [];
+  for (let i = start; i <= end; i++) {
+    result.push(i);
+  }
+  return result;
+};

@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { useSearchParams, useLocation, useNavigate } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import axios from "axios";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+
 import {
   Select,
   SelectContent,
@@ -10,18 +9,18 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import SearchIcon from "../assets/search.svg";
+
 import { API_KEY } from "@/constants/movieApiKey";
 import MovieCard from "@/components/cards/MovieCard";
+import MovieSearchbar from "@/components/search/MovieSearchbar";
 
 const Home = () => {
   const [movie, setMovie] = useState([]);
   const [genres, setGenres] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
-  const { search, pathname } = useLocation();
+
   const sortFilter = searchParams.get("sortBy");
   const genreFilter = searchParams.get("genre");
-  const navigate = useNavigate();
 
   useEffect(() => {
     const getAllGenres = async () => {
@@ -62,33 +61,21 @@ const Home = () => {
   }, [sortFilter, genreFilter]);
 
   const selectSearchParams = (value, name) => {
-    setSearchParams((prevParams) => prevParams.set(name, value));
-    navigate(`${pathname}?${searchParams.toString()}`);
+    setSearchParams((prevParams) => {
+      prevParams.set(name, value);
+      return prevParams;
+    });
   };
 
   return (
     <section className="flex flex-col py-20 items-center h-full">
-      <div className="flex w-full max-w-[600px] mb-10">
-        <Input
-          type="text"
-          placeholder="Search your movie..."
-          onChange={() => {}}
-          className="rounded-l-full min-h-[50px] shadow-none outline-none dark:text-slate-50 focus-visible:border-red-400"
-        />
-        <Button
-          onClick={() => {}}
-          className="rounded-r-full min-h-[50px]"
-          variant="destructive"
-        >
-          <SearchIcon fill="white" />
-        </Button>
-      </div>
-      <div className="flex gap-3 ">
+      <MovieSearchbar />
+      <div className="flex gap-3 flex-wrap">
         <Select
           defaultValue={sortFilter || ""}
           onValueChange={(val) => selectSearchParams(val, "sortBy")}
         >
-          <SelectTrigger className="w-[250px] focus:ring-0">
+          <SelectTrigger className="w-[250px] focus:ring-0 max-sm:w-full dark:text-slate-50">
             <SelectValue placeholder="Select a sorting filter" />
           </SelectTrigger>
           <SelectContent>
@@ -110,7 +97,7 @@ const Home = () => {
           defaultValue={genreFilter || ""}
           onValueChange={(val) => selectSearchParams(parseInt(val), "genre")}
         >
-          <SelectTrigger className="w-[250px] focus:ring-0">
+          <SelectTrigger className="w-[250px] focus:ring-0 max-sm:w-full dark:text-slate-50">
             <SelectValue placeholder="Select a genre filter" />
           </SelectTrigger>
           <SelectContent>

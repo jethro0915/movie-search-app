@@ -10,6 +10,7 @@ import Collections from "./page/Collections";
 import History from "./page/History";
 import ThemeProvider from "./context/ThemeProvider";
 import MovieDetail from "./page/MovieDetail";
+import Search from "./page/Search";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -17,6 +18,7 @@ const router = createBrowserRouter(
       <Route index element={<Home />} />
       <Route path="collections" element={<Collections />} />
       <Route path="history" element={<History />} />
+      <Route path="search" element={<Search />} />
       <Route path="movies/:movieId" element={<MovieDetail />} />
     </Route>
   )

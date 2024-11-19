@@ -7,7 +7,7 @@ const MovieCard = ({ id, postImg, title, rate, linkstate }) => {
   const { pathname } = useLocation();
   return (
     <Link
-      to={`movies/${id}`}
+      to={`/movies/${id}`}
       className="flex flex-col rounded-lg shadow-md w-[250px]"
       key={id}
       state={{ url: pathname, searchQuery: linkstate }}
@@ -17,13 +17,11 @@ const MovieCard = ({ id, postImg, title, rate, linkstate }) => {
           No Image
         </div>
       ) : (
-        <div className="h-[375px]">
+        <div className="h-[375px] w-[250px]">
           <img
-            src={`https://image.tmdb.org/t/p/original${postImg}`}
+            src={`https://image.tmdb.org/t/p/w185${postImg}`}
             alt={title}
-            width="250px"
-            height="375px"
-            className="rounded-t-lg object-cover"
+            className="rounded-t-lg h-[375px] w-[250px]"
           />
         </div>
       )}

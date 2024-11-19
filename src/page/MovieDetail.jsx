@@ -25,9 +25,6 @@ const MovieDetail = () => {
     getMovieById(movieId);
   }, [movieId]);
 
-  console.log(movieInfo);
-  console.log(state);
-
   return (
     <div className="pt-20">
       <section className="mt-5 container flex flex-col items-center mx-auto">
