@@ -16,7 +16,7 @@ const MovieSearchbar = () => {
   };
 
   return (
-    <div className="flex w-full max-w-[600px] mb-10">
+    <div className="flex w-full max-w-[600px] mb-10 mx-auto">
       <Input
         type="text"
         placeholder="Search your movie..."

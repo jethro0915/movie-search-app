@@ -11,7 +11,12 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 
-const PageNavigation = ({ totalPage, searchParams, onSearchParams }) => {
+const PageNavigation = ({
+  totalPage,
+  searchParams,
+  onSearchParams,
+  otherClasses,
+}) => {
   const currentPage = parseInt(searchParams.get("page")) || 1;
   const pageArray = getPageArray(currentPage, totalPage);
 
@@ -28,7 +33,7 @@ const PageNavigation = ({ totalPage, searchParams, onSearchParams }) => {
   };
 
   return (
-    <Pagination className="justify-start dark:text-slate-50">
+    <Pagination className={`dark:text-slate-50 ${otherClasses}`}>
       <PaginationContent>
         <PaginationItem>
           <PaginationPrevious

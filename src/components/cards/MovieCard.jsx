@@ -8,7 +8,7 @@ const MovieCard = ({ id, postImg, title, rate, linkstate }) => {
   return (
     <Link
       to={`/movies/${id}`}
-      className="flex flex-col rounded-lg shadow-md w-[250px]"
+      className="flex flex-col rounded-lg shadow-md w-[250px] h-fit"
       key={id}
       state={{ url: pathname, searchQuery: linkstate }}
     >
@@ -26,7 +26,7 @@ const MovieCard = ({ id, postImg, title, rate, linkstate }) => {
         </div>
       )}
       <div className="flex flex-col gap-3 p-3 dark:text-white">
-        <h1 className="font-bold text-xl line-clamp-1">{title}</h1>
+        <h1 className="font-bold text-xl line-clamp-2">{title}</h1>
         <div className="flex justify-between">
           <p className="text-lg font-medium">
             {`Rating: ${

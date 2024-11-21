@@ -10,7 +10,7 @@ const MovieInfo = ({ movieData }) => {
   const { mode } = useTheme();
   console.log(movieData);
   return (
-    <div>
+    <div className="flex flex-col">
       <div className="px-4 border-l-4 border-l-red-500">
         <h1 className="text-4xl font-semibold text-black dark:text-white">
           {movieData.title}
