@@ -1,11 +1,16 @@
 import React from "react";
 import { sidebarLinks } from "@/constants";
 import SidebarTabIcon from "./SidebarTabIcon";
-import { NavLink } from "react-router-dom";
+import { NavLink, Link, useLocation } from "react-router-dom";
 import SunIcon from "../../../src/assets/sun.svg";
 import MoonIcon from "../../../src/assets/moon.svg";
 import MenuIcon from "../../../src/assets/hamburger.svg";
+import UserIcon from "../../../src/assets/user.svg";
+import StarIcon from "../../../src/assets/star.svg";
+import LogoutIcon from "../../../src/assets/logout.svg";
 import { useTheme } from "@/hooks/useTheme";
+import { useAuth } from "@/hooks/useAuth";
+
 import {
   Sheet,
   SheetClose,
@@ -15,11 +20,22 @@ import {
   SheetTrigger,
   SheetTitle,
 } from "@/components/ui/sheet";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const Navbar = () => {
   const { mode, toggleTheme } = useTheme();
+  const { currentUser, handleSignOut } = useAuth();
+  const { pathname, search } = useLocation();
+
   return (
-    <header className="flex p-3 fixed bg-white shadow-md w-full z-10 dark:bg-slate-900">
+    <header className="flex px-5 py-3 fixed bg-white shadow-md w-full z-10 dark:bg-slate-900 justify-between items-center">
       <div className="flex gap-2 items-baseline max-sm:hidden">
         <img src="/assets/movie.svg" width={19} height={19} />
         <h1 className="font-bold text-2xl tracking-tighter text-black dark:text-white">
@@ -83,6 +99,52 @@ const Navbar = () => {
           </nav>
         </SheetContent>
       </Sheet>
+      {currentUser === null ? (
+        <Link
+          to="login"
+          state={{ url: pathname, query: search }}
+          className="flex gap-2 px-4 py-2 rounded-lg bg-red-600 text-slate-50 hover:bg-red-400  dark:bg-red-800 dark:hover:bg-red-500 items-center"
+        >
+          <UserIcon width={20} height={20} fill="white" />
+          <p className="font-bold">Sign In</p>
+        </Link>
+      ) : (
+        <DropdownMenu>
+          <DropdownMenuTrigger className="mr-5 outline-none">
+            <UserIcon width={30} height={30} fill="red" />
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="mt-1 p-2">
+            <DropdownMenuLabel className="text-xl">
+              {currentUser.displayName ||
+                currentUser.email.slice(0, currentUser.email.indexOf("@"))}
+            </DropdownMenuLabel>
+            <DropdownMenuLabel className="text-slate-300">
+              {currentUser.email}
+            </DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>
+              <Link to="/collections" className="flex gap-2">
+                <StarIcon
+                  width={21}
+                  height={21}
+                  stroke={mode === "dark" ? "white" : "black"}
+                />
+                <p>Collections</p>
+              </Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={handleSignOut}>
+              <div className="flex gap-2">
+                <LogoutIcon
+                  width={21}
+                  height={21}
+                  fill={mode === "dark" ? "white" : "black"}
+                />
+                <p>Logout</p>
+              </div>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      )}
     </header>
   );
 };
