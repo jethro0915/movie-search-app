@@ -29,7 +29,7 @@ const MovieDetail = () => {
     <div className="pt-20">
       <div className="mt-5 container flex flex-col items-center mx-auto">
         <Link
-          to={state === null ? "/" : `${state.url}?${state.searchQuery}`}
+          to={state === null ? "/" : `${state.url}?${state?.searchQuery || ""}`}
           className="mr-auto mb-5"
         >
           <BackIcon fill="red" width="25px" height="25px" className="ml-5" />

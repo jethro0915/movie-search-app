@@ -3,27 +3,93 @@
 import React from "react";
 import RatingIcon from "../../assets/rating.svg";
 import PopularityIcon from "../../assets/popularity.svg";
-import { getArrayValue, getStringValue } from "@/lib/utils";
+import {
+  getArrayValue,
+  getStringValue,
+  findMovieInCollections,
+  getDocIdFromCollections,
+} from "@/lib/utils";
 import { useTheme } from "@/hooks/useTheme";
+import { useAuth } from "@/hooks/useAuth";
+import { useToast } from "@/hooks/use-toast";
+import { Button } from "@/components/ui/button";
+import { Heart, Trash2 } from "lucide-react";
+import { db } from "@/database/server";
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 
 const MovieInfo = ({ movieData }) => {
   const { mode } = useTheme();
+  const { currentUser, userCollections, deleteMovieFromCollections } =
+    useAuth();
+
+  const { toast } = useToast();
+  const isCollected = findMovieInCollections(movieData.id, userCollections);
+
   console.log(movieData);
+  console.log(getDocIdFromCollections(movieData.id, userCollections));
+
+  const addMovieToCollections = async () => {
+    try {
+      const docRef = await addDoc(collection(db, "movieCollections"), {
+        uid: currentUser.uid,
+        movieData: {
+          movieId: movieData.id,
+          title: movieData.title,
+          genres: movieData.genres,
+          overview: movieData.overview,
+          postImg: movieData.poster_path,
+          rating: movieData.vote_average,
+        },
+        createdAt: serverTimestamp(),
+      });
+      toast({
+        title: "Movie is added to your collections sucessfully.",
+      });
+    } catch (err) {
+      toast({
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description: "There was a problem with your request. Please retry.",
+      });
+    }
+  };
+
   return (
-    <div className="flex flex-col">
-      <div className="px-4 border-l-4 border-l-red-500">
+    <div className="flex flex-col gap-3">
+      <section className="px-4 border-l-4 border-l-red-500">
         <h1 className="text-4xl font-semibold text-black dark:text-white">
           {movieData.title}
         </h1>
         <h3 className="text-xl text-slate-400 font-medium ">
           {movieData.original_title}
         </h3>
-      </div>
-
+      </section>
+      {isCollected ? (
+        <Button
+          onClick={() =>
+            deleteMovieFromCollections(
+              getDocIdFromCollections(movieData.id, userCollections)
+            )
+          }
+          className="w-fit bg-red-500 dark:bg-red-800 dark:text-white gap-2 hover:bg-red-400 dark:hover:bg-red-700"
+        >
+          <Trash2 width={20} height={20} />
+          Remove from Collections
+        </Button>
+      ) : (
+        <Button
+          onClick={addMovieToCollections}
+          disabled={currentUser === null}
+          className="w-fit bg-red-500 dark:bg-red-800 dark:text-white gap-2 hover:bg-red-400 dark:hover:bg-red-700"
+        >
+          <Heart width={20} height={20} />
+          Add to Collections
+        </Button>
+      )}
       <div className="flex max-sm:flex-col max-sm:items-center text-black dark:text-white">
         <div className="space-y-8 py-4 pr-4 border-r max-w-[320px] w-full max-sm:border-none">
           {movieData.poster_path === null ? (
-            <div className="flex w-[300px] h-[450px] bg-slate-400 justify-center items-center font-semibold text-3xl">
+            <div className="flex w-[300px] h-[450px] bg-slate-400 justify-center items-center font-semibold text-3xl flex-shrink-0">
               No Image
             </div>
           ) : (
@@ -33,6 +99,7 @@ const MovieInfo = ({ movieData }) => {
                 alt={movieData.title}
                 width="300px"
                 height="450px"
+                className="flex-shrink-0"
               />
             </div>
           )}

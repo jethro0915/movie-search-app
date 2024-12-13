@@ -10,6 +10,9 @@ import StarIcon from "../../../src/assets/star.svg";
 import LogoutIcon from "../../../src/assets/logout.svg";
 import { useTheme } from "@/hooks/useTheme";
 import { useAuth } from "@/hooks/useAuth";
+import { useToast } from "@/hooks/use-toast";
+import { auth } from "@/database/server";
+import { signOut } from "firebase/auth";
 
 import {
   Sheet,
@@ -31,8 +34,25 @@ import {
 
 const Navbar = () => {
   const { mode, toggleTheme } = useTheme();
-  const { currentUser, handleSignOut } = useAuth();
+  const { currentUser } = useAuth();
   const { pathname, search } = useLocation();
+  const { toast } = useToast();
+
+  const handleSignOut = () => {
+    signOut(auth)
+      .then(() => {
+        toast({
+          description: "You have logout succesfully.",
+        });
+      })
+      .catch((error) => {
+        toast({
+          variant: "destructive",
+          title: "Uh oh! Something went wrong.",
+          description: "There was a problem with your request. Please retry.",
+        });
+      });
+  };
 
   return (
     <header className="flex px-5 py-3 fixed bg-white shadow-md w-full z-10 dark:bg-slate-900 justify-between items-center">
@@ -122,8 +142,8 @@ const Navbar = () => {
               {currentUser.email}
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              <Link to="/collections" className="flex gap-2">
+            <DropdownMenuItem className="cursor-pointer">
+              <Link to="/collections" className="flex gap-2 w-full">
                 <StarIcon
                   width={21}
                   height={21}
@@ -132,7 +152,10 @@ const Navbar = () => {
                 <p>Collections</p>
               </Link>
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={handleSignOut}>
+            <DropdownMenuItem
+              onClick={handleSignOut}
+              className="cursor-pointer"
+            >
               <div className="flex gap-2">
                 <LogoutIcon
                   width={21}

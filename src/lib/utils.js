@@ -42,3 +42,23 @@ export const getPageArray = (currentPage, totalPage) => {
   }
   return result;
 };
+
+export const findMovieInCollections = (movieId, collections) => {
+  const result = collections.find(
+    (element) => element.movieData.movieId === movieId
+  );
+  if (result === undefined) {
+    return false;
+  }
+  return true;
+};
+
+export const getDocIdFromCollections = (movieId, collections) => {
+  const result = collections.find(
+    (element) => element.movieData.movieId === movieId
+  );
+  if (result === undefined) {
+    return undefined;
+  }
+  return result.id;
+};

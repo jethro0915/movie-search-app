@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import GoogleIcon from "../assets/google.svg";
 import { useAuth } from "@/hooks/useAuth";
+import { useToast } from "@/hooks/use-toast";
 import { auth } from "@/database/server";
 import { useNavigate, useLocation } from "react-router-dom";
 import {
@@ -26,6 +27,7 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const { currentUser } = useAuth();
+  const { toast } = useToast();
 
   const navigate = useNavigate();
   const { state } = useLocation();
@@ -76,7 +78,9 @@ const Login = () => {
         localStorage.setItem("emailForSignIn", email);
         setLoading(false);
         setError(null);
-        // ...
+        toast({
+          description: "Email has been sent to your address",
+        });
       })
       .catch((error) => {
         setLoading(false);

@@ -13,6 +13,7 @@ import Movies from "./page/Movies";
 import MovieDetail from "./page/MovieDetail";
 import Search from "./page/Search";
 import Login from "./page/Login";
+import { Toaster } from "@/components/ui/toaster";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -34,6 +35,7 @@ function App() {
     <AuthProvider>
       <ThemeProvider>
         <RouterProvider router={router} />
+        <Toaster />
       </ThemeProvider>
     </AuthProvider>
   );

@@ -11,6 +11,11 @@ export default {
       },
       colors: {},
     },
+    variants: {
+      extend: {
+        display: ["group-hover"],
+      },
+    },
   },
   plugins: [require("tailwindcss-animate")],
 };
