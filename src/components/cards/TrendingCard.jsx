@@ -7,7 +7,7 @@ const TrendingCard = ({ id, postImg, title, rate, overview }) => {
   return (
     <Link
       to={`/movies/${id}`}
-      className="space-y-2 rounded-lg shadow-md w-[250px] p-3 border h-fit"
+      className="space-y-2 rounded-lg shadow-md w-[250px] p-3 border h-fit dark:bg-slate-800 dark:border-none hover:scale-105 duration-100"
       key={id}
     >
       {postImg === null ? (

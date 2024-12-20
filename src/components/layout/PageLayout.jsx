@@ -5,7 +5,7 @@ import Navbar from "../shared/Navbar";
 
 const PageLayout = () => {
   return (
-    <main className="bg-slate-50 dark:bg-black relative">
+    <main className="bg-slate-50 dark:bg-slate-900 relative min-h-screen duration-300">
       <Navbar />
       <div className="flex">
         <LeftSidebar />

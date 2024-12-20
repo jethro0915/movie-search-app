@@ -1,6 +1,6 @@
 /* eslint-disable */
 
-import React from "react";
+import React, { useState } from "react";
 import RatingIcon from "../../assets/rating.svg";
 import PopularityIcon from "../../assets/popularity.svg";
 import {
@@ -16,6 +16,7 @@ import { Button } from "@/components/ui/button";
 import { Heart, Trash2 } from "lucide-react";
 import { db } from "@/database/server";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { TailSpin } from "react-loader-spinner";
 
 const MovieInfo = ({ movieData }) => {
   const { mode } = useTheme();
@@ -23,13 +24,14 @@ const MovieInfo = ({ movieData }) => {
     useAuth();
 
   const { toast } = useToast();
+  const [loading, setLoading] = useState(false);
   const isCollected = findMovieInCollections(movieData.id, userCollections);
 
   console.log(movieData);
-  console.log(getDocIdFromCollections(movieData.id, userCollections));
 
   const addMovieToCollections = async () => {
     try {
+      setLoading(true);
       const docRef = await addDoc(collection(db, "movieCollections"), {
         uid: currentUser.uid,
         movieData: {
@@ -42,15 +44,26 @@ const MovieInfo = ({ movieData }) => {
         },
         createdAt: serverTimestamp(),
       });
+      setLoading(false);
       toast({
         title: "Movie is added to your collections sucessfully.",
+        variant: "successful",
       });
     } catch (err) {
+      setLoading(false);
       toast({
         variant: "destructive",
         title: "Uh oh! Something went wrong.",
         description: "There was a problem with your request. Please retry.",
       });
+    }
+  };
+
+  const handleClick = async () => {
+    if (currentUser) {
+      await addMovieToCollections();
+    } else {
+      toast({ title: "You need to sign in first", variant: "destructive" });
     }
   };
 
@@ -78,30 +91,30 @@ const MovieInfo = ({ movieData }) => {
         </Button>
       ) : (
         <Button
-          onClick={addMovieToCollections}
-          disabled={currentUser === null}
+          onClick={handleClick}
+          disabled={loading === true}
           className="w-fit bg-red-500 dark:bg-red-800 dark:text-white gap-2 hover:bg-red-400 dark:hover:bg-red-700"
         >
-          <Heart width={20} height={20} />
+          {loading ? (
+            <TailSpin width="20" height="20" radius="1" color="white" />
+          ) : (
+            <Heart width={20} height={20} />
+          )}
           Add to Collections
         </Button>
       )}
       <div className="flex max-sm:flex-col max-sm:items-center text-black dark:text-white">
-        <div className="space-y-8 py-4 pr-4 border-r max-w-[320px] w-full max-sm:border-none">
+        <div className="space-y-8 py-4 pr-4 border-r min-w-[250px] max-w-[320px] w-full max-sm:border-none ">
           {movieData.poster_path === null ? (
-            <div className="flex w-[300px] h-[450px] bg-slate-400 justify-center items-center font-semibold text-3xl flex-shrink-0">
+            <div className="flex w-[300px] h-[450px] bg-slate-400 justify-center items-center font-semibold text-3xl max-md:w-[240px] max-md:h-[400px] max-sm:w-[300px] max-sm:h-[450px]">
               No Image
             </div>
           ) : (
-            <div className="h-[450px]">
-              <img
-                src={`https://image.tmdb.org/t/p/w200${movieData.poster_path}`}
-                alt={movieData.title}
-                width="300px"
-                height="450px"
-                className="flex-shrink-0"
-              />
-            </div>
+            <img
+              src={`https://image.tmdb.org/t/p/w200${movieData.poster_path}`}
+              alt={movieData.title}
+              className="w-[300px] h-[450px] flex-shrink-0 max-md:w-[240px] max-md:h-[400px] max-sm:w-[300px] max-sm:h-[400px]"
+            />
           )}
 
           <div className="space-y-2">
@@ -137,9 +150,9 @@ const MovieInfo = ({ movieData }) => {
             </p>
           </div>
         </div>
-        <div className="space-y-24 p-10 max-w-[500px] w-full">
-          <div className="flex gap-14 max-lg:flex-col">
-            <div className="flex flex-col items-center">
+        <div className="space-y-24 p-10 max-w-[550px] w-full max-lg:max-w-[500px]">
+          <div className="flex flex-wrap max-lg:gap-3 max-sm:justify-center lg:gap-6">
+            <div className="flex flex-col items-center py-4">
               <span className="inline-flex text-4xl font-semibold items-center gap-2">
                 <RatingIcon
                   fill={mode === "light" ? "black" : "white"}
@@ -158,7 +171,7 @@ const MovieInfo = ({ movieData }) => {
                 getStringValue(movieData.vote_count) !== "N/A" ? "users" : ""
               }`}</p>
             </div>
-            <div className="flex flex-col items-center">
+            <div className="flex flex-col items-center py-4">
               <span className="inline-flex text-4xl font-semibold items-center gap-2">
                 <PopularityIcon
                   fill={mode === "light" ? "black" : "white"}
@@ -176,7 +189,9 @@ const MovieInfo = ({ movieData }) => {
             <h1 className="text-3xl font-medium pl-4 border-l-4 border-l-red-500">
               Homepage
             </h1>
-            <p className="ml-5 text-lg">{getStringValue(movieData.homepage)}</p>
+            <p className="ml-5 text-lg break-all">
+              {getStringValue(movieData.homepage)}
+            </p>
           </div>
           <div className="space-y-8">
             <h1 className="text-3xl font-medium pl-4 border-l-4 border-l-red-500">

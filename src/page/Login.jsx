@@ -14,6 +14,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
 import { auth } from "@/database/server";
 import { useNavigate, useLocation } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import {
   signInWithPopup,
   GoogleAuthProvider,
@@ -79,69 +80,93 @@ const Login = () => {
         setLoading(false);
         setError(null);
         toast({
-          description: "Email has been sent to your address",
+          title: "Email has been sent to your address",
+          variant: "successful",
         });
       })
       .catch((error) => {
         setLoading(false);
         setError(error);
+        toast({
+          variant: "destructive",
+          title: "Uh oh! Something went wrong.",
+          description: "There was a problem with your request. Please retry.",
+        });
       });
   };
 
   const signInWithGoogle = async () => {
     const googleProvider = new GoogleAuthProvider();
+    setLoading(true);
     await signInWithPopup(auth, googleProvider)
       .then((result) => {
+        setLoading(false);
         navigate(redirectLink, { replace: true });
       })
       .catch((error) => {
         setError(error);
+        setLoading(false);
+        toast({
+          variant: "destructive",
+          title: "Uh oh! Something went wrong.",
+          description: "There was a problem with your request. Please retry.",
+        });
       });
   };
 
   return (
-    <Card className="w-[350px] mx-auto my-[250px]">
-      <CardHeader>
-        <CardTitle>Welcome back</CardTitle>
-        <CardDescription>Choose your sign-in option</CardDescription>
-        {error && <p className="text-red-500">{error.message}</p>}
-      </CardHeader>
-      <CardContent className="flex flex-col gap-5 mt-5">
-        <Input
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-          className="dark:border-slate-200 dark:bg-white dark:file:text-slate-950 dark:placeholder:text-slate-500 focus-visible:border-red-400"
-        />
-        <Button
-          onClick={handleEmailLinkLogin}
-          className="gap-3 font-semibold items-center bg-red-600 hover:bg-red-400 dark:text-white dark:bg-red-600 dark:hover:bg-red-400"
-        >
-          Sign In
-        </Button>
-        <div className="flex items-center gap-2 text-slate-400">
-          <hr className="flex-grow" />
-          <span>OR</span>
-          <hr className="flex-grow" />
-        </div>
-        <Button
-          onClick={signInWithGoogle}
-          className="gap-3 font-semibold items-center bg-red-600 hover:bg-red-400 dark:text-white dark:bg-red-600 dark:hover:bg-red-400"
-        >
-          <GoogleIcon width={20} height={20} fill="white" />
-          Continue With Google
-        </Button>
-      </CardContent>
-      <CardFooter className="flex justify-center">
-        <div className="flex gap-2 items-baseline mt-10">
-          <img src="/assets/movie.svg" width={20} height={20} />
-          <h1 className="font-bold text-2xl tracking-tighter text-black">
-            MovieWarehouse
-          </h1>
-        </div>
-      </CardFooter>
-    </Card>
+    <div className="flex h-screen items-center">
+      <Helmet>
+        <title>Login</title>
+      </Helmet>
+      <Card className="w-[350px] mx-auto self-center">
+        <CardHeader>
+          <CardTitle>Welcome back</CardTitle>
+          <CardDescription>Choose your sign-in option</CardDescription>
+          {error && <p className="text-red-500">{error.message}</p>}
+        </CardHeader>
+        <CardContent className="flex flex-col gap-5 mt-5">
+          <Input
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            className="dark:border-slate-200 dark:bg-white dark:file:text-slate-950 dark:placeholder:text-slate-500 focus-visible:border-red-400"
+          />
+          <Button
+            onClick={handleEmailLinkLogin}
+            className="gap-3 font-semibold items-center bg-red-600 hover:bg-red-400 dark:text-white dark:bg-red-600 dark:hover:bg-red-400"
+            disabled={loading === true}
+          >
+            Sign In
+          </Button>
+          <div className="flex items-center gap-2 text-slate-400">
+            <hr className="flex-grow" />
+            <span>OR</span>
+            <hr className="flex-grow" />
+          </div>
+          <Button
+            onClick={signInWithGoogle}
+            className="gap-3 font-semibold items-center bg-red-600 hover:bg-red-400 dark:text-white dark:bg-red-600 dark:hover:bg-red-400"
+            disabled={loading === true}
+          >
+            <GoogleIcon width={20} height={20} fill="white" />
+            Continue With Google
+          </Button>
+          <p className="text-slate-300 self-center text-[12px]">
+            * Unblock pop-up required
+          </p>
+        </CardContent>
+        <CardFooter className="flex justify-center">
+          <div className="flex gap-2 items-baseline mt-10">
+            <img src="/assets/movie.svg" width={20} height={20} />
+            <h1 className="font-bold text-2xl tracking-tighter text-black">
+              MovieWarehouse
+            </h1>
+          </div>
+        </CardFooter>
+      </Card>
+    </div>
   );
 };
 

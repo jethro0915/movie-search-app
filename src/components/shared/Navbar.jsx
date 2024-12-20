@@ -42,7 +42,8 @@ const Navbar = () => {
     signOut(auth)
       .then(() => {
         toast({
-          description: "You have logout succesfully.",
+          title: "You have logout succesfully.",
+          variant: "successful",
         });
       })
       .catch((error) => {
@@ -55,7 +56,7 @@ const Navbar = () => {
   };
 
   return (
-    <header className="flex px-5 py-3 fixed bg-white shadow-md w-full z-10 dark:bg-slate-900 justify-between items-center">
+    <header className="flex px-5 py-3 fixed bg-white shadow-md w-full z-10 dark:bg-slate-800 justify-between items-center duration-300">
       <div className="flex gap-2 items-baseline max-sm:hidden">
         <img src="/assets/movie.svg" width={19} height={19} />
         <h1 className="font-bold text-2xl tracking-tighter text-black dark:text-white">
@@ -65,15 +66,14 @@ const Navbar = () => {
       <Sheet>
         <SheetTrigger asChild>
           <MenuIcon
-            fill={mode === "light" ? "black" : "white"}
             width={32}
             height={32}
-            className="cursor-pointer sm:hidden"
+            className="cursor-pointer sm:hidden fill-red-500 dark:fill-red-700"
           />
         </SheetTrigger>
         <SheetContent
           side="left"
-          className="bg-white dark:bg-slate-900 dark:text-white border-none"
+          className="bg-white dark:bg-slate-800 dark:text-white border-none"
         >
           <SheetHeader>
             <SheetTitle>
@@ -93,7 +93,7 @@ const Navbar = () => {
                         [
                           "inline-flex gap-3 p-3 text-black  rounded-md w-[200px] dark:text-white",
                           isActive
-                            ? "bg-red-300 hover:bg-red-300"
+                            ? "bg-red-300 hover:bg-red-300 dark:bg-red-800 dark:hover:bg-red-800"
                             : " hover:bg-slate-100 dark:hover:bg-slate-700",
                         ].join(" ")
                       }
@@ -107,7 +107,7 @@ const Navbar = () => {
             </SheetClose>
             <button
               onClick={toggleTheme}
-              className="bg-white inline-flex gap-3 p-3 text-black hover:bg-slate-100 rounded-md outline-none w-[200px] dark:bg-slate-900 dark:text-white dark:hover:bg-slate-700"
+              className="bg-white inline-flex gap-3 p-3 text-black hover:bg-slate-100 rounded-md outline-none w-[200px] dark:bg-slate-800 dark:text-white dark:hover:bg-slate-700"
             >
               {mode === "light" ? (
                 <SunIcon fill={`black`} width={22} height={22} />
@@ -133,7 +133,10 @@ const Navbar = () => {
           <DropdownMenuTrigger className="mr-5 outline-none">
             <UserIcon width={30} height={30} fill="red" />
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="mt-1 p-2">
+          <DropdownMenuContent
+            align="end"
+            className="mt-1 p-2 dark:bg-slate-700"
+          >
             <DropdownMenuLabel className="text-xl">
               {currentUser.displayName ||
                 currentUser.email.slice(0, currentUser.email.indexOf("@"))}

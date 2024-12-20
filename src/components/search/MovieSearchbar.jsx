@@ -8,9 +8,6 @@ const MovieSearchbar = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const navigate = useNavigate();
 
-  //console.log(search);
-  //console.log(searchQuery);
-
   const handleClick = () => {
     navigate(`/search?query=${searchQuery}`);
   };
@@ -27,7 +24,7 @@ const MovieSearchbar = () => {
             handleClick();
           }
         }}
-        className="rounded-l-full min-h-[50px] shadow-none outline-none dark:text-slate-50 focus-visible:border-red-400"
+        className="rounded-l-full min-h-[50px] shadow-none outline-none dark:text-slate-50 dark:bg-slate-800 focus-visible:border-red-400"
       />
       <Button
         onClick={handleClick}

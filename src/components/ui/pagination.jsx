@@ -36,7 +36,7 @@ const PaginationLink = ({ className, isActive, size = "icon", ...props }) => (
         variant: isActive ? "secondary" : "ghost",
         size,
       }),
-      `${isActive ? "bg-red-300 dark:bg-red-300" : ""}`,
+      `${isActive ? "bg-red-300 dark:bg-red-800" : ""}`,
       className
     )}
     {...props}

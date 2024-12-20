@@ -4,6 +4,7 @@ import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Trash2 } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
+import { Badge } from "@/components/ui/badge";
 
 const CollectionCard = ({ movieData, docId }) => {
   const { genres, movieId, overview, postImg, title, rating } = movieData;
@@ -11,7 +12,7 @@ const CollectionCard = ({ movieData, docId }) => {
   const { pathname } = useLocation();
 
   return (
-    <div className="flex justify-between items-center gap-5 border-b border-slate-200 group">
+    <div className="flex justify-between items-center gap-5 border-b border-slate-200 group overflow-y-hidden">
       <Link
         to={`/movies/${movieId}`}
         className="flex gap-6 px-2 py-6 dark:text-white w-full max-w-[800px]"
@@ -25,10 +26,24 @@ const CollectionCard = ({ movieData, docId }) => {
         <div className="flex flex-col justify-between p-2">
           <div className="space-y-3">
             <h3 className="font-semibold text-xl line-clamp-1">{title}</h3>
-            <p className="font-md text-lg">{`Rating: ${rating}`}</p>
+            {genres.length > 0 ? (
+              <div className="flex gap-2 items-center flex-wrap">
+                <p className="font-md text-lg max-sm:hidden">Genres:</p>
+                {genres.map((item) => (
+                  <Badge
+                    key={item.id}
+                    className="rounded-lg bg-red-600  dark:bg-red-800 text-white dark:text-white hover:bg-red-600 hover:dark:bg-red-800 overflow-hidden"
+                  >
+                    {item.name}
+                  </Badge>
+                ))}
+              </div>
+            ) : (
+              <p className="font-md text-lg">{`Genres: N/A`}</p>
+            )}
           </div>
 
-          <p className="line-clamp-3">{overview}</p>
+          <p className="line-clamp-3 mt-2">{overview}</p>
         </div>
       </Link>
       <button

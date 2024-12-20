@@ -1,6 +1,6 @@
 /*eslint-disable */
 
-import React from "react";
+import React, { useMemo } from "react";
 import { getPageArray } from "@/lib/utils";
 import {
   Pagination,
@@ -18,7 +18,10 @@ const PageNavigation = ({
   otherClasses,
 }) => {
   const currentPage = parseInt(searchParams.get("page")) || 1;
-  const pageArray = getPageArray(currentPage, totalPage);
+  const pageArray = useMemo(
+    () => getPageArray(currentPage, totalPage),
+    [currentPage, totalPage]
+  );
 
   const handlePage = (value) => {
     onSearchParams((prevParams) => {

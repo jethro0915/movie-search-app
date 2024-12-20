@@ -25,6 +25,7 @@ const AuthProvider = ({ children }) => {
       await deleteDoc(doc(db, "movieCollections", docId));
       toast({
         title: "A movie is removed from your collections",
+        variant: "successful",
       });
     } catch (err) {
       toast({

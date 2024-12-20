@@ -9,11 +9,13 @@ import Home from "./page/Home";
 import Collections from "./page/Collections";
 import ThemeProvider from "./context/ThemeProvider";
 import AuthProvider from "./context/AuthProvider";
+import { HelmetProvider } from "react-helmet-async";
 import Movies from "./page/Movies";
 import MovieDetail from "./page/MovieDetail";
 import Search from "./page/Search";
 import Login from "./page/Login";
 import { Toaster } from "@/components/ui/toaster";
+import PageNotFound from "./page/PageNotFound";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -26,6 +28,7 @@ const router = createBrowserRouter(
         <Route path="movies/:movieId" element={<MovieDetail />} />
       </Route>
       <Route path="login" element={<Login />} />
+      <Route path="*" element={<PageNotFound />} />
     </Route>
   )
 );
@@ -34,8 +37,10 @@ function App() {
   return (
     <AuthProvider>
       <ThemeProvider>
-        <RouterProvider router={router} />
-        <Toaster />
+        <HelmetProvider>
+          <RouterProvider router={router} />
+          <Toaster />
+        </HelmetProvider>
       </ThemeProvider>
     </AuthProvider>
   );

@@ -10,7 +10,7 @@ const LeftSidebar = () => {
   const { mode, toggleTheme } = useTheme();
 
   return (
-    <section className="bg-white flex flex-col sticky top-0 left-0 p-4 pt-[90px] shadow-md h-screen border-r border-slate-100 lg:w-[280px] max-sm:hidden overflow-y-auto custom-scrollbar dark:bg-slate-900 dark:shadow-none dark:border-gray-800">
+    <section className="bg-white flex flex-col sticky top-0 left-0 p-4 pt-[90px] flex-shrink-0 shadow-md h-screen border-r border-slate-100 lg:w-[280px] max-sm:hidden overflow-y-auto custom-scrollbar dark:bg-slate-800 dark:shadow-none dark:border-gray-800 duration-300">
       <nav className="flex flex-1 flex-col gap-3 ">
         {sidebarLinks.map((item, index) => {
           return (
@@ -21,7 +21,7 @@ const LeftSidebar = () => {
                 [
                   "inline-flex gap-3 p-3 text-black  rounded-md  dark:text-white",
                   isActive
-                    ? "bg-red-300 hover:bg-red-300"
+                    ? "bg-red-300 hover:bg-red-300 dark:bg-red-800 dark:hover:bg-red-800 pointer-events-none"
                     : "hover:bg-slate-100 dark:hover:bg-slate-700",
                 ].join(" ")
               }
@@ -35,7 +35,7 @@ const LeftSidebar = () => {
         })}
         <button
           onClick={toggleTheme}
-          className="bg-white inline-flex gap-3 p-3 text-black hover:bg-slate-100 rounded-md dark:bg-slate-900 dark:text-white dark:hover:bg-slate-700"
+          className="bg-white inline-flex gap-3 p-3 text-black hover:bg-slate-100 rounded-md dark:bg-slate-800 dark:text-white dark:hover:bg-slate-700"
         >
           {mode === "light" ? (
             <SunIcon fill={`black`} width={22} height={22} />

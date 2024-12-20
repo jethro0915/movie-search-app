@@ -8,7 +8,7 @@ const MovieCard = ({ id, postImg, title, rate, linkstate }) => {
   return (
     <Link
       to={`/movies/${id}`}
-      className="flex flex-col rounded-lg shadow-md w-[250px] h-fit"
+      className="flex flex-col rounded-lg shadow-md w-[250px] h-fit dark:bg-slate-800 hover:scale-105 duration-300"
       key={id}
       state={{ url: pathname, searchQuery: linkstate }}
     >
