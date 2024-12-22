@@ -141,12 +141,15 @@ const Navbar = () => {
               {currentUser.displayName ||
                 currentUser.email.slice(0, currentUser.email.indexOf("@"))}
             </DropdownMenuLabel>
-            <DropdownMenuLabel className="text-slate-300">
+            <DropdownMenuLabel className="text-slate-300 text-[12px]">
               {currentUser.email}
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem className="cursor-pointer">
-              <Link to="/collections" className="flex gap-2 w-full">
+            <DropdownMenuItem asChild>
+              <Link
+                to="/collections"
+                className="flex gap-2 w-full cursor-pointer"
+              >
                 <StarIcon
                   width={21}
                   height={21}
@@ -155,11 +158,8 @@ const Navbar = () => {
                 <p>Collections</p>
               </Link>
             </DropdownMenuItem>
-            <DropdownMenuItem
-              onClick={handleSignOut}
-              className="cursor-pointer"
-            >
-              <div className="flex gap-2">
+            <DropdownMenuItem onClick={handleSignOut} asChild>
+              <div className="flex gap-2 cursor-pointer">
                 <LogoutIcon
                   width={21}
                   height={21}

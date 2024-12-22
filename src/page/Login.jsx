@@ -90,7 +90,7 @@ const Login = () => {
         toast({
           variant: "destructive",
           title: "Uh oh! Something went wrong.",
-          description: "There was a problem with your request. Please retry.",
+          description: `There was a problem with your request. Please retry. (${error.message})`,
         });
       });
   };
@@ -109,7 +109,7 @@ const Login = () => {
         toast({
           variant: "destructive",
           title: "Uh oh! Something went wrong.",
-          description: "There was a problem with your request. Please retry.",
+          description: `There was a problem with your request. Please retry. (${error.message})`,
         });
       });
   };
@@ -123,11 +123,14 @@ const Login = () => {
         <CardHeader>
           <CardTitle>Welcome back</CardTitle>
           <CardDescription>Choose your sign-in option</CardDescription>
-          {error && <p className="text-red-500">{error.message}</p>}
+          {error && (
+            <p className="text-red-500">There is a problem. Please retry</p>
+          )}
         </CardHeader>
         <CardContent className="flex flex-col gap-5 mt-5">
           <Input
             placeholder="Email"
+            type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required

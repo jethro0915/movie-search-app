@@ -12,38 +12,40 @@ const CollectionCard = ({ movieData, docId }) => {
   const { pathname } = useLocation();
 
   return (
-    <div className="flex justify-between items-center gap-5 border-b border-slate-200 group overflow-y-hidden">
+    <div className="flex justify-between items-center gap-5 border-b border-slate-200 group overflow-y-hidden max-sm:gap-2">
       <Link
         to={`/movies/${movieId}`}
-        className="flex gap-6 px-2 py-6 dark:text-white w-full max-w-[800px]"
+        className="flex justify-between gap-6 px-2 py-6 dark:text-white w-full max-w-[800px] max-sm:gap-1"
         state={{ url: pathname }}
       >
         <img
           src={`https://image.tmdb.org/t/p/w185${postImg}`}
           alt={title}
-          className="h-[180px] w-[150px]"
+          className="h-[180px] w-[150px] max-sm:h-[150px] max-sm:w-[100px] flex-shrink"
         />
         <div className="flex flex-col justify-between p-2">
           <div className="space-y-3">
-            <h3 className="font-semibold text-xl line-clamp-1">{title}</h3>
+            <h3 className="font-semibold text-xl line-clamp-1 max-sm:text-base">
+              {title}
+            </h3>
             {genres.length > 0 ? (
-              <div className="flex gap-2 items-center flex-wrap">
+              <div className="flex gap-2 items-center flex-wrap max-sm:overflow-x-hidden max-sm:gap-1">
                 <p className="font-md text-lg max-sm:hidden">Genres:</p>
                 {genres.map((item) => (
                   <Badge
                     key={item.id}
-                    className="rounded-lg bg-red-600  dark:bg-red-800 text-white dark:text-white hover:bg-red-600 hover:dark:bg-red-800 overflow-hidden"
+                    className="rounded-lg bg-red-600  dark:bg-red-800 text-white dark:text-white hover:bg-red-600 hover:dark:bg-red-800 overflow-hidden max-sm:text-[8px]"
                   >
                     {item.name}
                   </Badge>
                 ))}
               </div>
             ) : (
-              <p className="font-md text-lg">{`Genres: N/A`}</p>
+              <p className="font-md text-lg max-sm:text-sm">{`Genres: N/A`}</p>
             )}
           </div>
 
-          <p className="line-clamp-3 mt-2">{overview}</p>
+          <p className="line-clamp-3 mt-2 max-sm:text-xs">{overview}</p>
         </div>
       </Link>
       <button

@@ -27,8 +27,6 @@ const MovieInfo = ({ movieData }) => {
   const [loading, setLoading] = useState(false);
   const isCollected = findMovieInCollections(movieData.id, userCollections);
 
-  console.log(movieData);
-
   const addMovieToCollections = async () => {
     try {
       setLoading(true);
@@ -69,7 +67,7 @@ const MovieInfo = ({ movieData }) => {
 
   return (
     <div className="flex flex-col gap-3">
-      <section className="px-4 border-l-4 border-l-red-500">
+      <section className="px-4 border-l-4 border-l-red-500 max-sm:ml-5">
         <h1 className="text-4xl font-semibold text-black dark:text-white">
           {movieData.title}
         </h1>
@@ -84,7 +82,7 @@ const MovieInfo = ({ movieData }) => {
               getDocIdFromCollections(movieData.id, userCollections)
             )
           }
-          className="w-fit bg-red-500 dark:bg-red-800 dark:text-white gap-2 hover:bg-red-400 dark:hover:bg-red-700"
+          className="w-fit bg-red-500 dark:bg-red-800 dark:text-white gap-2 hover:bg-red-400 dark:hover:bg-red-700 max-sm:ml-5"
         >
           <Trash2 width={20} height={20} />
           Remove from Collections
@@ -93,7 +91,7 @@ const MovieInfo = ({ movieData }) => {
         <Button
           onClick={handleClick}
           disabled={loading === true}
-          className="w-fit bg-red-500 dark:bg-red-800 dark:text-white gap-2 hover:bg-red-400 dark:hover:bg-red-700"
+          className="w-fit bg-red-500 dark:bg-red-800 dark:text-white gap-2 hover:bg-red-400 dark:hover:bg-red-700 max-sm:ml-5"
         >
           {loading ? (
             <TailSpin width="20" height="20" radius="1" color="white" />

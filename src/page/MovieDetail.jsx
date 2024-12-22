@@ -3,7 +3,7 @@ import { useParams, useLocation, Link } from "react-router-dom";
 import axios from "axios";
 import { API_KEY } from "@/constants/movieApiKey";
 import MovieInfo from "@/components/movie/MovieInfo";
-import BackIcon from "../assets/chevronleft.svg";
+import { ChevronLeft } from "lucide-react";
 import { Helmet } from "react-helmet-async";
 
 const MovieDetail = () => {
@@ -63,7 +63,7 @@ const MovieDetail = () => {
           to={state === null ? "/" : `${state.url}?${state?.searchQuery || ""}`}
           className="mr-auto mb-5"
         >
-          <BackIcon fill="red" width="25px" height="25px" className="ml-5" />
+          <ChevronLeft className="w-[50px] h-[50px] stroke-red-500" />
         </Link>
         <MovieInfo movieData={movieInfo} />
       </div>

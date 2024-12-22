@@ -53,7 +53,9 @@ const Home = () => {
       <MovieSearchbar />
       <h1 className="flex items-center text-5xl max-md:text-3xl dark:text-white mx-5 py-3 border-b-4 border-red-500 dark:border-red-800">
         People Watch This Week
-        <FlameIcon className="w-[55px] h-[55px] max-md:w-[40px] max-md:h-[40px]" />
+        <span>
+          <FlameIcon className="w-[55px] h-[55px] max-md:w-[40px] max-md:h-[40px]" />
+        </span>
       </h1>
       {loading ? (
         <div className="flex w-full justify-center py-10">
