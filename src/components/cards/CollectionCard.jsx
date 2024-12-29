@@ -12,10 +12,10 @@ const CollectionCard = ({ movieData, docId }) => {
   const { pathname } = useLocation();
 
   return (
-    <div className="flex justify-between items-center gap-5 border-b border-slate-200 group overflow-y-hidden max-sm:gap-2">
+    <div className="flex justify-between items-center gap-5 border-b border-slate-200 group overflow-y-hidden max-sm:gap-2 dark:border-slate-600">
       <Link
         to={`/movies/${movieId}`}
-        className="flex justify-between gap-6 px-2 py-6 dark:text-white w-full max-w-[800px] max-sm:gap-1"
+        className="flex gap-6 px-2 py-6 dark:text-white w-full max-w-[800px] max-sm:gap-1"
         state={{ url: pathname }}
       >
         <img
@@ -23,8 +23,8 @@ const CollectionCard = ({ movieData, docId }) => {
           alt={title}
           className="h-[180px] w-[150px] max-sm:h-[150px] max-sm:w-[100px] flex-shrink"
         />
-        <div className="flex flex-col justify-between p-2">
-          <div className="space-y-3">
+        <div className="flex flex-col gap-4 p-2 max-sm:gap-2">
+          <div className="space-y-3 max-sm:space-y-2">
             <h3 className="font-semibold text-xl line-clamp-1 max-sm:text-base">
               {title}
             </h3>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { API_KEY } from "@/constants/movieApiKey";
 import TrendingCard from "@/components/cards/TrendingCard";
@@ -34,8 +34,6 @@ const Home = () => {
     };
     getTrendings();
   }, []);
-
-  console.log(error);
 
   if (error) {
     return (
@@ -77,7 +75,7 @@ const Home = () => {
       )}
       <div className="flex flex-col items-center gap-2">
         <TmdbIcon className="w-[100px] h-[80px]" />
-        <p className="text-slate-300 dark:text-slate-600 text-[12px]">
+        <p className="text-slate-300 dark:text-slate-600 text-[12px] text-center">
           This product uses the TMDB API but is not endorsed or certified by
           TMDB.
         </p>

@@ -7,8 +7,6 @@ import { Helmet } from "react-helmet-async";
 const Collections = () => {
   const { currentUser, userCollections } = useAuth();
 
-  console.log(userCollections);
-
   return (
     <section className="flex flex-col pt-20 mx-auto h-full w-full max-w-[850px]">
       <Helmet>
@@ -30,7 +28,7 @@ const Collections = () => {
         ) : (
           <div className="flex flex-col items-center justify-center gap-3 py-20">
             <FolderX className="w-[150px] h-[150px] stroke-slate-200 dark:stroke-slate-700" />
-            <p className="text-slate-200 text-2xl font-semibold dark:text-slate-700">
+            <p className="text-slate-200 text-2xl font-semibold dark:text-slate-700 text-center">
               No collections
             </p>
           </div>
@@ -38,7 +36,7 @@ const Collections = () => {
       ) : (
         <div className="flex flex-col items-center justify-center gap-3 py-20">
           <Ban className="w-[150px] h-[150px] stroke-slate-200 dark:stroke-slate-700" />
-          <p className="text-slate-200 text-2xl font-semibold dark:text-slate-700">
+          <p className="text-slate-200 text-2xl font-semibold dark:text-slate-700 text-center">
             Required sign in to see this content
           </p>
         </div>

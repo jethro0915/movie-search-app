@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams, useLocation, Link } from "react-router-dom";
 import axios from "axios";
 import { API_KEY } from "@/constants/movieApiKey";
@@ -11,8 +11,6 @@ const MovieDetail = () => {
   const [movieInfo, setMovieInfo] = useState({});
   const [error, setError] = useState(null);
   const { state } = useLocation();
-
-  console.log(movieInfo);
 
   useEffect(() => {
     const getMovieById = async (id) => {

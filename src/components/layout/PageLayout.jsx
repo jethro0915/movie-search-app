@@ -9,7 +9,7 @@ const PageLayout = () => {
       <Navbar />
       <div className="flex">
         <LeftSidebar />
-        <section className="flex flex-col flex-wrap ml-auto w-[90%] max-sm:w-full h-auto p-4">
+        <section className="flex flex-col flex-wrap ml-auto w-[90%] max-sm:w-full h-auto p-4 overflow-auto">
           <Outlet />
         </section>
       </div>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import {
   Card,
   CardContent,
@@ -115,11 +115,11 @@ const Login = () => {
   };
 
   return (
-    <div className="flex h-screen items-center">
+    <div className="flex h-screen items-center overflow-auto px-2">
       <Helmet>
         <title>Login</title>
       </Helmet>
-      <Card className="w-[350px] mx-auto self-center">
+      <Card className="w-full max-w-[350px] min-w-[300px] mx-auto self-center">
         <CardHeader>
           <CardTitle>Welcome back</CardTitle>
           <CardDescription>Choose your sign-in option</CardDescription>
