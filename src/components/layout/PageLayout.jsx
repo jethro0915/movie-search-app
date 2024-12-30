@@ -2,6 +2,7 @@ import React from "react";
 import { Outlet } from "react-router-dom";
 import LeftSidebar from "../shared/LeftSidebar";
 import Navbar from "../shared/Navbar";
+import ScrollToTop from "../shared/ScrollToTop";
 
 const PageLayout = () => {
   return (
@@ -10,6 +11,7 @@ const PageLayout = () => {
       <div className="flex">
         <LeftSidebar />
         <section className="flex flex-col flex-wrap ml-auto w-[90%] max-sm:w-full h-auto p-4 overflow-auto">
+          <ScrollToTop />
           <Outlet />
         </section>
       </div>
